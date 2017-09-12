@@ -39,7 +39,7 @@ cw_ref = dict(zip(dot_dash_list, chars_list))
 ser = serial.Serial('/dev/tty.usbmodem1411', 9600)
 print(ser.name)    
 
-sleep(1)
+sleep(2)
 
 # Initialise an empty list to hold the 'beeps':
 beep_list = []
@@ -47,7 +47,7 @@ beep_list = []
 # Read input from the arduino via the serial port; pressing the key returns a 
 # string of 1's until the key is released. These key presses are appended to
 # the beep_list for parsing.
-while len(beep_list) < 10 :
+while len(beep_list) < 10 : # and len(beep_list[-1]) < 20:
     data = ser.readline()
     # print as we go, sanity check:
     print(data)
@@ -57,7 +57,17 @@ while len(beep_list) < 10 :
 # print the 'raw data beeps', i.e. the 1's without the 0's
 print("Raw beep data from key: ", beep_list)
 
-cleaned_data = []
+# convert the beeps to dots & dashes & construct the cw string:
+cw_string = ""
 
-#for beep in beep_list:
- #   if  len(beep) > 4
+for beep in enumerate(beep_list):
+    index = beep[0]
+    clean_beep = str(beep_list[index])[2:-3]
+    if  len(beep[1]) <= 5 :
+        cw_string += '.'
+    elif len(beep[1]) > 5 < 15:
+        cw_string += '-'
+
+print('String generated: ', cw_string)
+
+ser.close()
