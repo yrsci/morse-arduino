@@ -15,11 +15,12 @@ void loop() {
   if (sensorVal == 1) {
     tone(buzzPin, freq);  
     Serial.write('1');
+    Serial.write('\n');
   }
   else {
-    Serial.write('\n');
     noTone(buzzPin);
+    Serial.write('0');
+    Serial.write('\n');
   }
   delay(25);
 }
-
